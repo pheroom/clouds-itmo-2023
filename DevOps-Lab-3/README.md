@@ -12,13 +12,12 @@
 
 Так же в настройках репозитория добавим логин и пароль от Docker-аккаунта в Secrets.
 
-![repo dockerhub](./images/dockerhub.png)
-
 ### Этап 2. Dockerfile
 
 В репо создан проект на React и *Dockerfile* который создаёт образ этого проекта. Содержимое **Dockerfile** в репозитории:
 
-`FROM node:12.18.1
+```
+FROM node:12.18.1
 
 ENV NODE_ENV production
 
@@ -28,13 +27,17 @@ COPY ./my-app /app/
 
 RUN npm install
 
-CMD npm start`
+CMD npm start
+```
+
+![repo dockerhub](./images/dockerhub.png)
 
 ### Этап 3. Настройка workflows
 
 Содержимое файла **docker-build.yml**:
 
-`name: Docker Build
+``` yaml
+name: Docker Build
 
 on:
   push:
@@ -56,7 +59,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_NAME }}/lab3:latest`
+          tags: ${{ secrets.DOCKER_NAME }}/lab3:latest
+```
 
 ![workflows logs](./images/workflows.png)
 
